@@ -48,3 +48,8 @@ class Ingredients(models.Model):
     count = models.SmallIntegerField()
     unit = models.CharField(max_length=10)
     etc = models.CharField(max_length=255)
+
+
+class RecipeProcess(models.Model):
+    foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE)
+    content = models.TextField()
