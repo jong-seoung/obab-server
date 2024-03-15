@@ -53,3 +53,8 @@ class Ingredients(models.Model):
 class RecipeProcess(models.Model):
     foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE)
     content = models.TextField()
+
+class ConvenienceItems(models.Model):
+    foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    price = models.IntegerField()
