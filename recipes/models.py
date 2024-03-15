@@ -39,3 +39,12 @@ class FoodRecipes(TimeStampedModel, models.Model):
         self.sumnail.upload_to = f'sumnail/{self.categoryCD}/'
 
         super().save(*args, **kwargs)
+
+
+class Ingredients(models.Model):
+    foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE)
+    type = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    count = models.SmallIntegerField()
+    unit = models.CharField(max_length=10)
+    etc = models.CharField(max_length=255)
