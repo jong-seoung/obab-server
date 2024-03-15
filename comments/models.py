@@ -1,8 +1,9 @@
 from django.db import models
 from accounts.models import User
 from recipes.models import RecipeProcess
+from core.models import TimeStampedModel
 
-class Comments(models.Model):
+class Comments(TimeStampedModel, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(RecipeProcess, on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
