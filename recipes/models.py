@@ -19,7 +19,7 @@ DIFFICULTY_CHOICES = [
 
 class FoodRecipes(TimeStampedModel, models.Model):
     categoryCD = models.CharField(max_length=100, choices=CATEGORYCDS, blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_foodrecipe_author', blank=True, null=True)
     title = models.CharField(max_length=255)
     tot_price = models.IntegerField(blank=True, null=True)
     sumnail = models.ImageField(blank=True, null=True)
@@ -28,6 +28,9 @@ class FoodRecipes(TimeStampedModel, models.Model):
     time = models.TimeField(blank=True, null=True)
     people_num = models.IntegerField(blank=True, null=True)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, blank=True, null=True)
+
+    like = models.ManyToManyField(User, related_name='user_foodrecipe_like', blank=True)
+    bookmark = models.ManyToManyField(User, related_name='user_foodrecipe_bookmark', blank=True)
 
     def __str__(self):
         return self.title
