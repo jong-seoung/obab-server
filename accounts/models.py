@@ -7,7 +7,6 @@ from django.contrib.auth.models import (
 )
 
 from core.models import TimeStampedModel
-# from core.functions import upload_user_img
 
 
 class UserManager(BaseUserManager):
@@ -40,17 +39,17 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractBaseUser, TimeStampedModel, PermissionsMixin):
-    email = models.EmailField(_("email address"), unique=True, max_length=256)
+class User(TimeStampedModel, AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_("email address"), unique=True, max_length=255)
     name = models.CharField(_("name"), max_length=30, blank=True, null=True)
     nickname = models.CharField(
         _("nickname"), max_length=15, unique=True, blank=True, null=True
     )
-    # profile = models.ImageField(
-    #     _("profile image"),
-    #     upload_to=upload_user_img,
-    #     default="img/default/default_user_img.jpg",
-    # )
+    profile_img = models.ImageField(
+        _("profile image"),
+        default="img/default/default_user_img.jpg",
+    )
+    self_info = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(_("active"), default=True)
     is_staff = models.BooleanField(_("is_staff"), default=False)
     is_superuser = models.BooleanField(_("is_superuser"), default=False)
@@ -59,3 +58,11 @@ class User(AbstractBaseUser, TimeStampedModel, PermissionsMixin):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    def save(self, *args, **kwargs):
+        if not self.email:
+            raise ValueError("email is required.")
+        
+        self.profile_img.upload_to = f'profile_img/{self.email}/{self.created_at}/{self.nickname}_img.webp'
+
+        super().save(*args, **kwargs)
