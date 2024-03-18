@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from datetime import timedelta
 
 # Application definition
 
@@ -23,9 +23,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+	"django.contrib.sites",
+    
+	'drf_yasg',
     'corsheaders',
-    'rest_framework',
+    # django-rest-framework
+    "rest_framework",
+    'rest_framework.authtoken',
+    "rest_framework_simplejwt.token_blacklist",
+    # authentication
+    'dj_rest_auth',
+    # 'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
 
     'core',
     'accounts',
@@ -113,6 +126,24 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 STATIC_URL = 'static/'
 MEDIA_URL = "/media/"
 
+# djangorestframework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# djangorestframework-simplejwt
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=365),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
+SITE_ID = 1
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
