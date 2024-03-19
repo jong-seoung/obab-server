@@ -1,10 +1,7 @@
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
-from .views import FoodRecipeList, FoodRecipeDetail
+from .views import *
 
 urlpatterns = [
-    path('foodrecipe/',FoodRecipeList.as_view()),
-    path('foodrecipe/<int:pk>/',FoodRecipeDetail.as_view()),
+    path('recipes/', FoodRecipesListCreateAPIView.as_view(), name='foodrecipes-list'),
+    path('recipes/<int:pk>/', FoodRecipesRetrieveUpdateDestroyAPIView.as_view(), name='foodrecipes-detail'),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
