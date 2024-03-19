@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
 )
 
 from core.models import TimeStampedModel
+from core.functions import upload_user_directory
 
 
 class UserManager(BaseUserManager):
@@ -47,7 +48,8 @@ class User(TimeStampedModel, AbstractBaseUser, PermissionsMixin):
     )
     profile_img = models.ImageField(
         _("profile image"),
-        default="img/default/default_user_img.jpg",
+        upload_to= upload_user_directory,
+        default='img/default/default_img.jpg'
     )
     self_info = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(_("active"), default=True)
