@@ -17,6 +17,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 KAKAO_REST_API_KEY = env('kakao_rest_api_key')
 SOCIAL_AUTH_GOOGLE_CLIENT_ID = env('google_client_api')
 SOCIAL_AUTH_GOOGLE_SECRET = env('google_api_secret')
+SOCIAL_AUTH_NAVER_CLIENT_ID = env('naver_api_key')
+SOCIAL_AUTH_NAVER_SECRET = env('naver_api_secret')
 STATE = env("state")
 BASE_URL = env('base_url')
 
