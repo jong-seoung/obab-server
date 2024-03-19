@@ -22,7 +22,8 @@ class FoodRecipes(TimeStampedModel, models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_foodrecipe_author', blank=True, null=True)
     title = models.CharField(max_length=255)
     tot_price = models.IntegerField(blank=True, null=True)
-    sumnail = models.ImageField(blank=True, null=True)
+    thumnail = models.ImageField(blank=True, null=True, upload_to='thumnail/')
+    content = models.TextField()
     video = models.URLField(blank=True, null=True)
     intro = models.CharField(max_length=255, blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
@@ -34,14 +35,6 @@ class FoodRecipes(TimeStampedModel, models.Model):
 
     def __str__(self):
         return self.title
-    
-    def save(self, *args, **kwargs):
-        if not self.categoryCD:
-            raise ValueError("categoryCD is required.")
-        
-        self.sumnail.upload_to = f'sumnail/{self.categoryCD}/'
-
-        super().save(*args, **kwargs)
 
 
 class Ingredients(models.Model):
