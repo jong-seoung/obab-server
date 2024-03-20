@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # django-rest-framework
     "rest_framework",
     'rest_framework.authtoken',
+    "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     # authentication
     'dj_rest_auth',
@@ -145,6 +146,16 @@ SIMPLE_JWT = {
 }
 
 SITE_ID = 1
+
+# swagger settings
+SWAGGER_SETTINGS = {
+    "DEFAULT_INFO": "obab.urls.api_info",
+    "USE_SESSION_AUTH": False,
+    "VALIDATOR_URL": None,
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
