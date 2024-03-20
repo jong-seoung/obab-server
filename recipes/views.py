@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .serializer import FoodRecipesSerializer
 from .models import FoodRecipes
+from .permissions import IsOwnerOrReadOnly
 from accounts.functions import get_user_id
 
 class FoodRecipesListCreateAPIView(generics.ListCreateAPIView):
@@ -20,3 +21,5 @@ class FoodRecipesListCreateAPIView(generics.ListCreateAPIView):
 class FoodRecipesRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FoodRecipes.objects.all()
     serializer_class = FoodRecipesSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOrReadOnly]
