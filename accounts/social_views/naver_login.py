@@ -8,7 +8,6 @@ class NaverLoginView(APIView):
     schema = None
 
     def get(self, request):
-        print(1, Constants.NAVER_CALLBACK_URI, Constants.NAVER_CLIENT_ID)
         state = 'random_string'
         return redirect(
             f"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id={Constants.NAVER_CLIENT_ID}"
@@ -92,7 +91,6 @@ class NaverCallbackView(APIView):
 
         except User.DoesNotExist:
             data = {'access_token': access_token, 'code': code}
-            print(1, data)
             accept = requests.post(
                 f"{BASE_URL}accounts/naver/login/finish/", data=data
             )
