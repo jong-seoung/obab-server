@@ -21,7 +21,7 @@ DIFFICULTY_CHOICES = [
 
 class FoodRecipes(TimeStampedModel, models.Model):
     categoryCD = models.CharField(max_length=100, choices=CATEGORYCDS, blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_foodrecipe_author', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_foodrecipe_author', blank=True, null=True)
     title = models.CharField(max_length=255)
     tot_price = models.IntegerField(blank=True, null=True)
     thumnail = models.ImageField(blank=True, null=True, upload_to=upload_user_directory)
