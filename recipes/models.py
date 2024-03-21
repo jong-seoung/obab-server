@@ -7,7 +7,7 @@ from core.functions import upload_user_directory
 
 CATEGORYCDS = [
     ('food_recipe', '음식 레시피'),
-    ('menu_recommendation', '메뉴 추천'),
+    ('broadcast_recipe','방송 레시피'),
     ('convenience_store_combination', '편의점 꿀 조합'),
     ('seasoning_recipe', '양념 레시피'),
     ('cooking_tip', '요리 TIP'),
@@ -25,7 +25,6 @@ class FoodRecipes(TimeStampedModel, models.Model):
     title = models.CharField(max_length=255)
     tot_price = models.IntegerField(blank=True, null=True)
     thumnail = models.ImageField(blank=True, null=True, upload_to=upload_user_directory)
-    content = models.TextField()
     video = models.URLField(blank=True, null=True)
     intro = models.CharField(max_length=255, blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
