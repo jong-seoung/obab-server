@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import viewsets
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -34,7 +33,7 @@ class BaseAbuotRecipesViewset(CreateModelMixin, UpdateModelMixin, GenericViewSet
         post_user = FoodRecipes.objects.get(id=post_id).user
 
         if user != post_user:
-            return Response({'error': 'Custom validation failed.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': '자격 인증 데이터가 잘못되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
             
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)

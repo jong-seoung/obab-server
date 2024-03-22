@@ -1,6 +1,7 @@
-from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, RecipeProcessSerializer
+from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, ConvenienceItemsSerializer
+from .models import FoodRecipes, Ingredients, RecipeProcess, ConvenienceItems
 from core.viewsets import BaseRecipesViewSet, BaseAbuotRecipesViewset
-from .models import FoodRecipes, Ingredients, RecipeProcess
+from core.serializers import RecipeProcessSerializer
 
 # FoodRecipes
 class FoodRecipesViewSet(BaseRecipesViewSet):
@@ -22,6 +23,8 @@ class ConvenienceRecipesViewSet(BaseRecipesViewSet):
     queryset = FoodRecipes.objects.filter(categoryCD='convenience_store_combination')
     serializer_class = ConvenienceRecipesSerializer
 
+
+### subViewSets ###
 class IngredientsViewset(BaseAbuotRecipesViewset):
     queryset = Ingredients.objects.all()
     serializer_class = IngredientsSerializer
@@ -29,3 +32,8 @@ class IngredientsViewset(BaseAbuotRecipesViewset):
 class RecipeProcessViewset(BaseAbuotRecipesViewset):
     queryset = RecipeProcess.objects.all()
     serializer_class = RecipeProcessSerializer
+
+class ConvenienceItemsViewset(BaseAbuotRecipesViewset):
+    queryset = ConvenienceItems.objects.all()
+    serializer_class = ConvenienceItemsSerializer
+### end subViewSets ###

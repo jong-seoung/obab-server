@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.serializers import BaseRecipeSerializer
-from recipes.models import FoodRecipes, Ingredients, RecipeProcess, ConvenienceItems
+from recipes.models import FoodRecipes, Ingredients, ConvenienceItems
 
 
 class IngredientsSerializer(serializers.ModelSerializer):
@@ -9,19 +9,14 @@ class IngredientsSerializer(serializers.ModelSerializer):
         model = Ingredients
         fields = '__all__'
 
-class RecipeProcessSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecipeProcess
-        fields = '__all__'
-
 class ConvenienceItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConvenienceItems
         fields = '__all__'
 
+
 class FoodRecipesSerializer(BaseRecipeSerializer):
     ingredients = serializers.SerializerMethodField()
-    recipeprocess = serializers.SerializerMethodField()
 
     class Meta:
         model = FoodRecipes
@@ -33,13 +28,15 @@ class FoodRecipesSerializer(BaseRecipeSerializer):
         serializer = IngredientsSerializer(ingredient, many=True)
         return serializer.data
     
-    def get_recipeprocess(self, data):
-        recipeprocess = RecipeProcess.objects.filter(foodrecipe=data.id)
-        serializer = RecipeProcessSerializer(recipeprocess, many=True)
-        return serializer.data
-    
 class ConvenienceRecipesSerializer(BaseRecipeSerializer):
+    convenience_item = serializers.SerializerMethodField()
+
     class Meta:
         model = FoodRecipes
         fields = ['id', 'user', 'profile', 'title', 'thumnail', 'categoryCD', 'tot_price', 'intro', 'time', 'video',
-                'difficulty', 'created_at', 'updated_at']
+                'difficulty', 'created_at', 'updated_at', 'convenience_item','recipeprocess', 'comments', ]
+        
+    def get_convenience_item(self, data):
+        convenience_item = ConvenienceItems.objects.filter(foodrecipe=data.id)
+        serializer = ConvenienceItemsSerializer(convenience_item, many=True)
+        return serializer.data

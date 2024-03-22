@@ -11,6 +11,7 @@ router.register(r'broadcast-recipes', BroadcastRecipesViewSet, basename='broadca
 router.register(r'seasoning-recipes', SeasoningRecipesViewSet, basename='seasoning_recipe') 
 router.register(r'recipes-ingredients', IngredientsViewset, basename='recipe-ingredients') 
 router.register(r'recipes-process', RecipeProcessViewset, basename='recipe-process') 
+router.register(r'convenience-items', ConvenienceItemsViewset, basename='convenience-items') 
 
 # 라우터 URL을 urlpatterns에 추가
 urlpatterns = [
