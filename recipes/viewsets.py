@@ -1,10 +1,6 @@
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
-from rest_framework.viewsets import GenericViewSet
-
 from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, RecipeProcessSerializer
-from core.viewsets import BaseRecipesViewSet
+from core.viewsets import BaseRecipesViewSet, BaseAbuotRecipesViewset
 from .models import FoodRecipes, Ingredients, RecipeProcess
-
 
 # FoodRecipes
 class FoodRecipesViewSet(BaseRecipesViewSet):
@@ -26,11 +22,10 @@ class ConvenienceRecipesViewSet(BaseRecipesViewSet):
     queryset = FoodRecipes.objects.filter(categoryCD='convenience_store_combination')
     serializer_class = ConvenienceRecipesSerializer
 
-
-class IngredientsViewset(CreateModelMixin, UpdateModelMixin, GenericViewSet):
+class IngredientsViewset(BaseAbuotRecipesViewset):
     queryset = Ingredients.objects.all()
     serializer_class = IngredientsSerializer
 
-class RecipeProcessViewset(CreateModelMixin, UpdateModelMixin, GenericViewSet):
+class RecipeProcessViewset(BaseAbuotRecipesViewset):
     queryset = RecipeProcess.objects.all()
     serializer_class = RecipeProcessSerializer
