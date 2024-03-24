@@ -1,7 +1,7 @@
 from rest_framework.parsers import MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import viewsets
 from rest_framework import status
@@ -19,7 +19,7 @@ class BaseRecipesViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=get_user_id(self.request))
 
-class BaseAbuotRecipesViewset(CreateModelMixin, UpdateModelMixin, GenericViewSet):
+class BaseAbuotRecipesViewset(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     parser_classes = (MultiPartParser,)
     authentication_classes = [JWTAuthentication]
     permission_classes = [UserPostAccessPermission]
@@ -29,12 +29,14 @@ class BaseAbuotRecipesViewset(CreateModelMixin, UpdateModelMixin, GenericViewSet
         serializer.is_valid(raise_exception=True)
 
         user = get_user_id(self.request)
-        post_id = serializer.validated_data['foodrecipe'].id
+        instance = serializer.validated_data['foodrecipe']
+        post_id = instance.id
         post_user = FoodRecipes.objects.get(id=post_id).user
 
         if user != post_user:
             return Response({'error': '자격 인증 데이터가 잘못되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-            
-        self.perform_create(serializer)
+        return self.create_response(serializer, instance)
+
+    def create_response(self, serializer, instance):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

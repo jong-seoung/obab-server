@@ -1,3 +1,6 @@
+from rest_framework import status
+from rest_framework.response import Response
+
 from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, ConvenienceItemsSerializer
 from .models import FoodRecipes, Ingredients, RecipeProcess, ConvenienceItems
 from core.viewsets import BaseRecipesViewSet, BaseAbuotRecipesViewset
@@ -36,4 +39,24 @@ class RecipeProcessViewset(BaseAbuotRecipesViewset):
 class ConvenienceItemsViewset(BaseAbuotRecipesViewset):
     queryset = ConvenienceItems.objects.all()
     serializer_class = ConvenienceItemsSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        instance = self.get_object()
+        price = instance.price
+        foodrecipe = instance.foodrecipe
+        tot_price = foodrecipe.tot_price - price
+
+        foodrecipe.tot_price = tot_price
+        foodrecipe.save()
+
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def create_response(self, serializer, instance):
+        response = super().create_response(serializer, instance)
+        price = serializer.data['price']
+        instance.tot_price += price
+        instance.save()
+        return response
 ### end subViewSets ###
