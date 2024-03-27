@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import User
 from core.models import TimeStampedModel
 
-from core.functions import upload_user_directory
+from core.functions import upload_user_directory, upload_post_image_directory
 
 
 CATEGORYCDS = [
@@ -55,3 +55,14 @@ class ConvenienceItems(models.Model):
     foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     price = models.IntegerField()
+
+
+class RecipeImage(models.Model):
+    STATUS_CHOICES = (
+        ('임시저장', '임시저장'),
+        ('반영', '반영'),
+    )
+
+    foodrecipe = models.ForeignKey(FoodRecipes, on_delete=models.CASCADE, default=None)
+    image = models.ImageField(upload_to=upload_post_image_directory)
+    state = models.CharField(max_length=10, choices=STATUS_CHOICES, default='임시저장')

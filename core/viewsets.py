@@ -1,3 +1,5 @@
+from django.core.files.storage import default_storage
+
 from rest_framework.parsers import MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -40,3 +42,22 @@ class BaseAbuotRecipesViewset(CreateModelMixin, UpdateModelMixin, DestroyModelMi
     def create_response(self, serializer, instance):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+class RecipeImageViewset(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+    parser_classes = (MultiPartParser,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = []
+
+    def perform_create(self, serializer):
+        serializer.save(state='임시저장')
+    
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        default_storage.delete(instance.image.path)
+        serializer.save(state='반영')
+
+    def perform_destroy(self, instance):
+        instance = self.get_object()
+        default_storage.delete(instance.image.path)
+        instance.delete()
+        

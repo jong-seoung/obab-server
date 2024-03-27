@@ -1,9 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
 
-from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, ConvenienceItemsSerializer
-from .models import FoodRecipes, Ingredients, RecipeProcess, ConvenienceItems
-from core.viewsets import BaseRecipesViewSet, BaseAbuotRecipesViewset
+from .serializer import FoodRecipesSerializer, ConvenienceRecipesSerializer, IngredientsSerializer, ConvenienceItemsSerializer, RecipeImageSerializer
+from .models import FoodRecipes, Ingredients, RecipeProcess, ConvenienceItems, RecipeImage
+from core.viewsets import BaseRecipesViewSet, BaseAbuotRecipesViewset, RecipeImageViewset
 from core.serializers import RecipeProcessSerializer
 
 # FoodRecipes
@@ -28,6 +28,10 @@ class ConvenienceRecipesViewSet(BaseRecipesViewSet):
 
 
 ### subViewSets ###
+class RecipeImageViewset(RecipeImageViewset):
+    queryset = RecipeImage.objects.all()
+    serializer_class = RecipeImageSerializer
+
 class IngredientsViewset(BaseAbuotRecipesViewset):
     queryset = Ingredients.objects.all()
     serializer_class = IngredientsSerializer

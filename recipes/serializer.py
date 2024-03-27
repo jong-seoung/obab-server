@@ -1,9 +1,14 @@
 from rest_framework import serializers
 
 from core.serializers import BaseRecipeSerializer
-from recipes.models import FoodRecipes, Ingredients, ConvenienceItems
+from recipes.models import FoodRecipes, Ingredients, ConvenienceItems, RecipeImage
 
 
+class RecipeImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeImage
+        fields = '__all__'
+ 
 class IngredientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredients
