@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import User
 from core.models import TimeStampedModel
 
-from core.functions import upload_user_directory, upload_post_image_directory
+from core.functions import upload_thumnail_directory, upload_post_image_directory
 
 
 CATEGORYCDS = [
@@ -24,7 +24,7 @@ class FoodRecipes(TimeStampedModel, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_foodrecipe_author', blank=True, null=True)
     title = models.CharField(max_length=255)
     tot_price = models.IntegerField(blank=True, null=True)
-    thumnail = models.ImageField(blank=True, null=True, upload_to=upload_user_directory)
+    thumnail = models.ImageField(blank=True, null=True, upload_to=upload_thumnail_directory)
     video = models.URLField(blank=True, null=True)
     intro = models.CharField(max_length=255, blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
