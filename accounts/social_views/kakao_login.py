@@ -18,7 +18,10 @@ class KakaoCallbackView(APIView):
     permission_classes = [AllowAny]
     @swagger_auto_schema(
         operation_id="카카오 로그인 콜백",
-        tags=['로그인'],
+        operation_description="카카오에서 반환한 인증 코드를 넣으면, 회원가입 or 로그인 후 서버 토큰 리턴\n"
+        "닉네임이 없으면 message를 True 반환\n"
+        "True면 닉네임, 프로필, 이름, 한줄 소개 업데이트",
+        tags=['소셜 로그인'],
         manual_parameters=[
             openapi.Parameter(
                 'code',
