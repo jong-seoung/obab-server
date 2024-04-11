@@ -8,24 +8,43 @@ from core.serializers import RecipeProcessSerializer
 
 # FoodRecipes
 class FoodRecipesViewSet(BaseRecipesViewSet):
-    queryset = FoodRecipes.objects.filter(categoryCD='food_recipe')
+    categoryCD='food_recipe'
+    queryset = FoodRecipes.objects.filter(categoryCD=categoryCD)
     serializer_class = FoodRecipesSerializer
-
+    
+    def perform_create(self, serializer):
+        serializer.save(categoryCD=self.categoryCD)
+        return super().perform_create(serializer)
+    
 # BroadcastRecipes
 class BroadcastRecipesViewSet(BaseRecipesViewSet):
-    queryset = FoodRecipes.objects.filter(categoryCD='broadcast_recipe')
+    categoryCD='broadcast_recipe'
+    queryset = FoodRecipes.objects.filter(categoryCD=categoryCD)
     serializer_class = FoodRecipesSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(categoryCD=self.categoryCD)
+        return super().perform_create(serializer)
 
 # seasoning_recipe
 class SeasoningRecipesViewSet(BaseRecipesViewSet):
-    queryset = FoodRecipes.objects.filter(categoryCD='seasoning_recipe')
+    categoryCD='seasoning_recipe'
+    queryset = FoodRecipes.objects.filter(categoryCD=categoryCD)
     serializer_class = FoodRecipesSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(categoryCD=self.categoryCD)
+        return super().perform_create(serializer)
 
 # ConvenienceRecipes
 class ConvenienceRecipesViewSet(BaseRecipesViewSet):
-    queryset = FoodRecipes.objects.filter(categoryCD='convenience_store_combination')
+    categoryCD='convenience_store_combination'
+    queryset = FoodRecipes.objects.filter(categoryCD=categoryCD)
     serializer_class = ConvenienceRecipesSerializer
-
+    
+    def perform_create(self, serializer):
+        serializer.save(categoryCD=self.categoryCD)
+        return super().perform_create(serializer)
 
 ### subViewSets ###
 class RecipeImageViewset(RecipeImageViewset):
@@ -45,7 +64,6 @@ class ConvenienceItemsViewset(BaseAbuotRecipesViewset):
     serializer_class = ConvenienceItemsSerializer
 
     def destroy(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
         instance = self.get_object()
         price = instance.price
         foodrecipe = instance.foodrecipe

@@ -22,6 +22,7 @@ class ConvenienceItemsSerializer(serializers.ModelSerializer):
 
 class FoodRecipesSerializer(BaseRecipeSerializer):
     ingredients = serializers.SerializerMethodField()
+    categoryCD = serializers.ReadOnlyField()
 
     class Meta:
         model = FoodRecipes
@@ -32,9 +33,10 @@ class FoodRecipesSerializer(BaseRecipeSerializer):
         ingredient = Ingredients.objects.filter(foodrecipe=data.id)
         serializer = IngredientsSerializer(ingredient, many=True)
         return serializer.data
-    
+        
 class ConvenienceRecipesSerializer(BaseRecipeSerializer):
     convenience_item = serializers.SerializerMethodField()
+    categoryCD = serializers.ReadOnlyField()
 
     class Meta:
         model = FoodRecipes
