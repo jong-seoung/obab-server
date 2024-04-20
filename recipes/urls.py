@@ -2,7 +2,14 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from .viewsets import *
+from .viewsets.basicfood_recipes import FoodRecipesViewSet
+from .viewsets.convenience_recipes import ConvenienceRecipesViewSet
+from .viewsets.broadcast_recipes import BroadcastRecipesViewSet
+from .viewsets.seasoning_recipes import SeasoningRecipesViewSet
+from .viewsets.ingredients import IngredientsViewset
+from .viewsets.recipe_process import RecipeProcessViewset
+from .viewsets.convenience_items import ConvenienceItemsViewset
+from .viewsets.recipe_images import RecipeImageViewset
 
 router = DefaultRouter()
 router.register(r'food-recipes', FoodRecipesViewSet, basename='food-recipes') 
