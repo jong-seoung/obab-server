@@ -6,16 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recipes', '0005_remove_foodrecipes_sumnail_foodrecipeimage'),
+        ("recipes", "0005_remove_foodrecipes_sumnail_foodrecipeimage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='foodrecipes',
-            name='thumnail',
-            field=models.ImageField(blank=True, null=True, upload_to=''),
+            model_name="foodrecipes",
+            name="thumnail",
+            field=models.ImageField(blank=True, null=True, upload_to=""),
         ),
         migrations.DeleteModel(
-            name='FoodRecipeImage',
+            name="FoodRecipeImage",
         ),
     ]

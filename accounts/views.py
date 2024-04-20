@@ -27,7 +27,7 @@ class Constants:
     # kakao
     REST_API_KEY = getattr(settings, "KAKAO_REST_API_KEY")
     KAKAO_CALLBACK_URI = f"http://localhost:3000/kakao"
-    
+
     # google
     GOOGLE_CALLBACK_URI = f"http://localhost:3000/google"
     GOOGLE_CLIENT_ID = getattr(settings, "SOCIAL_AUTH_GOOGLE_CLIENT_ID")
@@ -39,5 +39,5 @@ class Constants:
     )
     # naver
     NAVER_CALLBACK_URI = f"http://localhost:3000/naver"
-    NAVER_CLIENT_ID = getattr(settings, 'SOCIAL_AUTH_NAVER_CLIENT_ID')
-    NAVER_CLIENT_SECRET = getattr(settings, 'SOCIAL_AUTH_NAVER_SECRET')
+    NAVER_CLIENT_ID = getattr(settings, "SOCIAL_AUTH_NAVER_CLIENT_ID")
+    NAVER_CLIENT_SECRET = getattr(settings, "SOCIAL_AUTH_NAVER_SECRET")

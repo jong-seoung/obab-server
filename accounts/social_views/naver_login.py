@@ -8,7 +8,7 @@ class NaverLoginView(APIView):
     schema = None
 
     def get(self, request):
-        state = 'random_string'
+        state = "random_string"
         return redirect(
             f"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id={Constants.NAVER_CLIENT_ID}"
             f"&state={state}&redirect_uri={Constants.NAVER_CALLBACK_URI}"
@@ -23,12 +23,12 @@ class NaverCallbackView(APIView):
         operation_description="네이버에서 반환한 인증 코드를 넣으면, 회원가입 or 로그인 후 서버 토큰 리턴\n"
         "닉네임이 없으면 message를 True 반환\n"
         "True면 닉네임, 프로필, 이름, 한줄 소개 업데이트",
-        tags=['소셜 로그인'],
+        tags=["소셜 로그인"],
         manual_parameters=[
             openapi.Parameter(
-                'code',
+                "code",
                 in_=openapi.IN_QUERY,
-                description='네이버에서 반환한 인증 코드',
+                description="네이버에서 반환한 인증 코드",
                 type=openapi.TYPE_STRING,
                 required=True,
             ),
@@ -40,12 +40,14 @@ class NaverCallbackView(APIView):
         NAVER_CLIENT_SECRET = Constants.NAVER_CLIENT_SECRET
         NAVER_CALLBACK_URI = Constants.NAVER_CALLBACK_URI
         code = request.GET.get("code")
-        state = 'random_string'
+        state = "random_string"
 
-        token_req = requests.post(f"https://nid.naver.com/oauth2.0/token?client_id={NAVER_CLIENT_ID}"
-                                  f"&client_secret={NAVER_CLIENT_SECRET}&code={code}"
-                                  f"&grant_type=authorization_code&redirect_uri={NAVER_CALLBACK_URI}"
-                                  f"&state={state}")
+        token_req = requests.post(
+            f"https://nid.naver.com/oauth2.0/token?client_id={NAVER_CLIENT_ID}"
+            f"&client_secret={NAVER_CLIENT_SECRET}&code={code}"
+            f"&grant_type=authorization_code&redirect_uri={NAVER_CALLBACK_URI}"
+            f"&state={state}"
+        )
         token_req_json = token_req.json()
         error = token_req_json.get("error")
         if error is not None:
@@ -53,7 +55,9 @@ class NaverCallbackView(APIView):
                 return redirect(f"{BASE_URL}accounts/naver/login")
             return JsonResponse(token_req_json)
         access_token = token_req_json.get("access_token")
-        email_req = requests.get(f"https://openapi.naver.com/v1/nid/me?access_token={access_token}")
+        email_req = requests.get(
+            f"https://openapi.naver.com/v1/nid/me?access_token={access_token}"
+        )
         email_req_status = email_req.status_code
         if email_req_status != 200:
             return JsonResponse(
@@ -76,9 +80,7 @@ class NaverCallbackView(APIView):
                 )
             data = {"access_token": access_token, "code": code}
 
-            accept = requests.post(
-                f"{BASE_URL}accounts/naver/login/finish/", data=data
-            )
+            accept = requests.post(f"{BASE_URL}accounts/naver/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse(
@@ -93,10 +95,8 @@ class NaverCallbackView(APIView):
             return res
 
         except User.DoesNotExist:
-            data = {'access_token': access_token, 'code': code}
-            accept = requests.post(
-                f"{BASE_URL}accounts/naver/login/finish/", data=data
-            )
+            data = {"access_token": access_token, "code": code}
+            accept = requests.post(f"{BASE_URL}accounts/naver/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse(

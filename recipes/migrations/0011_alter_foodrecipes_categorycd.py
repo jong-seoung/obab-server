@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recipes', '0010_remove_foodrecipes_content'),
+        ("recipes", "0010_remove_foodrecipes_content"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='foodrecipes',
-            name='categoryCD',
-            field=models.CharField(blank=True, choices=[('food_recipe', '음식 레시피'), ('broadcast_recipe', '방송 레시피'), ('convenience_store_combination', '편의점 꿀 조합'), ('seasoning_recipe', '양념 레시피'), ('cooking_tip', '요리 TIP')], max_length=100, null=True),
+            model_name="foodrecipes",
+            name="categoryCD",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("food_recipe", "음식 레시피"),
+                    ("broadcast_recipe", "방송 레시피"),
+                    ("convenience_store_combination", "편의점 꿀 조합"),
+                    ("seasoning_recipe", "양념 레시피"),
+                    ("cooking_tip", "요리 TIP"),
+                ],
+                max_length=100,
+                null=True,
+            ),
         ),
     ]

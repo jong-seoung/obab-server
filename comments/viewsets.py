@@ -12,7 +12,10 @@ from accounts.functions import get_user_id
 
 from .models import Comments
 
-class CommentViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+
+class CommentViewSet(
+    CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet
+):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Comments.objects.all()
@@ -21,7 +24,7 @@ class CommentViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Gene
     def perform_create(self, serializer):
         serializer.save(user=get_user_id(self.request))
 
-    @swagger_auto_schema(operation_id="댓글 생성", tags=['댓글'])
+    @swagger_auto_schema(operation_id="댓글 생성", tags=["댓글"])
     def create(self, request, *args, **kwargs):
         """
         댓글 생성
@@ -31,7 +34,7 @@ class CommentViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Gene
         """
         return super().create(request, *args, **kwargs)
 
-    @swagger_auto_schema(operation_id="댓글 전체 수정", tags=['댓글'])
+    @swagger_auto_schema(operation_id="댓글 전체 수정", tags=["댓글"])
     def update(self, request, *args, **kwargs):
         """
         댓글 전체 수정
@@ -41,7 +44,7 @@ class CommentViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Gene
         """
         return super().update(request, *args, **kwargs)
 
-    @swagger_auto_schema(operation_id='댓글 부분 수정', tags=['댓글'])
+    @swagger_auto_schema(operation_id="댓글 부분 수정", tags=["댓글"])
     def partial_update(self, request, *args, **kwargs):
         """
         댓글 부분 수정
@@ -50,8 +53,8 @@ class CommentViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Gene
         수정할 내용만 파라미터로 보내주시면 됩니다.
         """
         return super().partial_update(request, *args, **kwargs)
-    
-    @swagger_auto_schema(operation_id='댓글 삭제', tags=['댓글'])
+
+    @swagger_auto_schema(operation_id="댓글 삭제", tags=["댓글"])
     def destroy(self, request, *args, **kwargs):
         """
         댓글 삭제

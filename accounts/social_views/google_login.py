@@ -22,12 +22,12 @@ class GoogleCallbackView(APIView):
         operation_description="구글에서 반환한 인증 코드를 넣으면, 회원가입 or 로그인 후 서버 토큰 리턴\n"
         "닉네임이 없으면 message를 True 반환\n"
         "True면 닉네임, 프로필, 이름, 한줄 소개 업데이트",
-        tags=['소셜 로그인'],
+        tags=["소셜 로그인"],
         manual_parameters=[
             openapi.Parameter(
-                'code',
+                "code",
                 in_=openapi.IN_QUERY,
-                description='구글에서 반환한 인증 코드',
+                description="구글에서 반환한 인증 코드",
                 type=openapi.TYPE_STRING,
                 required=True,
             ),
@@ -39,12 +39,14 @@ class GoogleCallbackView(APIView):
         GOOGLE_CLIENT_SECRET = Constants.GOOGLE_CLIENT_SECRET
         GOOGLE_CALLBACK_URI = Constants.GOOGLE_CALLBACK_URI
         code = request.GET.get("code")
-        state = 'random_string'
+        state = "random_string"
 
-        token_req = requests.post(f"https://oauth2.googleapis.com/token?client_id={GOOGLE_CLIENT_ID}"
-                                  f"&client_secret={GOOGLE_CLIENT_SECRET}&code={code}"
-                                  f"&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI}"
-                                  f"&state={state}")
+        token_req = requests.post(
+            f"https://oauth2.googleapis.com/token?client_id={GOOGLE_CLIENT_ID}"
+            f"&client_secret={GOOGLE_CLIENT_SECRET}&code={code}"
+            f"&grant_type=authorization_code&redirect_uri={GOOGLE_CALLBACK_URI}"
+            f"&state={state}"
+        )
         token_req_json = token_req.json()
         error = token_req_json.get("error")
         if error is not None:
@@ -53,7 +55,9 @@ class GoogleCallbackView(APIView):
             return JsonResponse(token_req_json)
         access_token = token_req_json.get("access_token")
 
-        email_req = requests.get(f"https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={access_token}")
+        email_req = requests.get(
+            f"https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={access_token}"
+        )
         email_req_status = email_req.status_code
         if email_req_status != 200:
             return JsonResponse(
@@ -93,7 +97,7 @@ class GoogleCallbackView(APIView):
             return res
 
         except User.DoesNotExist:
-            data = {'access_token': access_token, 'code': code}
+            data = {"access_token": access_token, "code": code}
             accept = requests.post(
                 f"{BASE_URL}accounts/google/login/finish/", data=data
             )

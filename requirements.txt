@@ -1,7 +1,9 @@
 asgiref==3.7.2
+black==24.4.0
 certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
+click==8.1.7
 cryptography==42.0.5
 defusedxml==0.7.1
 dj-rest-auth==4.0.1
@@ -14,9 +16,12 @@ djangorestframework-simplejwt==5.3.1
 drf-yasg==1.21.7
 idna==3.6
 inflection==0.5.1
+mypy-extensions==1.0.0
 oauthlib==3.2.2
 packaging==24.0
+pathspec==0.12.1
 pillow==10.2.0
+platformdirs==4.2.0
 psycopg2==2.9.9
 pycparser==2.21
 PyJWT==2.8.0

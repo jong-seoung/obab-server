@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_alter_user_profile_img'),
+        ("accounts", "0002_alter_user_profile_img"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='profile_img',
-            field=models.ImageField(default='img/default/default_img.jpg', upload_to=core.functions.upload_user_directory, verbose_name='profile image'),
+            model_name="user",
+            name="profile_img",
+            field=models.ImageField(
+                default="img/default/default_img.jpg",
+                upload_to=core.functions.upload_user_directory,
+                verbose_name="profile image",
+            ),
         ),
     ]

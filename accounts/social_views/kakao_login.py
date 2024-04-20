@@ -16,17 +16,18 @@ class KakaoLoginView(APIView):
 
 class KakaoCallbackView(APIView):
     permission_classes = [AllowAny]
+
     @swagger_auto_schema(
         operation_id="카카오 로그인 콜백",
         operation_description="카카오에서 반환한 인증 코드를 넣으면, 회원가입 or 로그인 후 서버 토큰 리턴\n"
         "닉네임이 없으면 message를 True 반환\n"
         "True면 닉네임, 프로필, 이름, 한줄 소개 업데이트",
-        tags=['소셜 로그인'],
+        tags=["소셜 로그인"],
         manual_parameters=[
             openapi.Parameter(
-                'code',
+                "code",
                 in_=openapi.IN_QUERY,
-                description='카카오에서 반환한 인증 코드',
+                description="카카오에서 반환한 인증 코드",
                 type=openapi.TYPE_STRING,
                 required=True,
             ),
@@ -54,7 +55,7 @@ class KakaoCallbackView(APIView):
         profile_request = requests.get(
             "https://kapi.kakao.com/v2/user/me",
             headers={"Authorization": f"Bearer {access_token}"},
-        )        
+        )
         profile_json = profile_request.json()
         kakao_account = profile_json.get("kakao_account")
         email = kakao_account.get("email")
@@ -72,9 +73,7 @@ class KakaoCallbackView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             data = {"access_token": access_token, "code": code}
-            accept = requests.post(
-                f"{BASE_URL}accounts/kakao/login/finish/", data=data
-            )
+            accept = requests.post(f"{BASE_URL}accounts/kakao/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse(
@@ -89,9 +88,7 @@ class KakaoCallbackView(APIView):
             return res
         except User.DoesNotExist:
             data = {"access_token": access_token, "code": code}
-            accept = requests.post(
-                f"{BASE_URL}accounts/kakao/login/finish/", data=data
-            )
+            accept = requests.post(f"{BASE_URL}accounts/kakao/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse(

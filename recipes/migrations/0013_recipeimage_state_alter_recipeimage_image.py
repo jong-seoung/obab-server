@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recipes', '0012_recipeimage'),
+        ("recipes", "0012_recipeimage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='recipeimage',
-            name='state',
-            field=models.CharField(choices=[('임시저장', '임시저장'), ('반영', '반영')], default='임시저장', max_length=10),
+            model_name="recipeimage",
+            name="state",
+            field=models.CharField(
+                choices=[("임시저장", "임시저장"), ("반영", "반영")],
+                default="임시저장",
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='recipeimage',
-            name='image',
-            field=models.ImageField(upload_to=core.functions.upload_post_image_directory),
+            model_name="recipeimage",
+            name="image",
+            field=models.ImageField(
+                upload_to=core.functions.upload_post_image_directory
+            ),
         ),
     ]

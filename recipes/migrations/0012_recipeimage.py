@@ -8,16 +8,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recipes', '0011_alter_foodrecipes_categorycd'),
+        ("recipes", "0011_alter_foodrecipes_categorycd"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='RecipeImage',
+            name="RecipeImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to=core.functions.upload_user_directory)),
-                ('foodrecipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.foodrecipes')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(upload_to=core.functions.upload_user_directory),
+                ),
+                (
+                    "foodrecipe",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="recipes.foodrecipes",
+                    ),
+                ),
             ],
         ),
     ]
